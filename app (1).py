@@ -28,7 +28,7 @@ if scaler is None or model is None:
 st.title(" World Development Clustering Dashboard")
 st.markdown("Upload your dataset (must contain same numeric columns as training).")
 
-uploaded_file = st.file_uploader("📤 Upload CSV File", type=["csv"])
+uploaded_file = st.file_uploader(" Upload CSV File", type=["csv"])
 
 if uploaded_file is not None:
 
@@ -36,16 +36,16 @@ if uploaded_file is not None:
     try:
         df = pd.read_csv(uploaded_file)
     except Exception as e:
-        st.error(f"❌ Error reading CSV: {e}")
+        st.error(f" Error reading CSV: {e}")
         st.stop()
 
-    st.subheader("📄 Uploaded Data Preview")
+    st.subheader(" Uploaded Data Preview")
     st.dataframe(df.head())
 
   
     numeric_df = df.select_dtypes(include=[np.number])
     if numeric_df.empty:
-        st.error("❌ No numeric columns found.")
+        st.error(" No numeric columns found.")
         st.stop()
 
    
@@ -62,14 +62,14 @@ if uploaded_file is not None:
     try:
         X_scaled = scaler.transform(numeric_df)
     except Exception as e:
-        st.error(f"❌ Scaling failed: {e}")
+        st.error(f" Scaling failed: {e}")
         st.stop()
 
     #  Predict Clusters
     try:
         labels = model.predict(X_scaled)
     except Exception as e:
-        st.error(f"❌ Prediction failed: {e}")
+        st.error(f" Prediction failed: {e}")
         st.stop()
 
     df["Cluster"] = labels
@@ -108,4 +108,4 @@ if uploaded_file is not None:
     st.download_button("Download CSV", csv, "clustered_output.csv", "text/csv")
 
 else:
-    st.info("📌 Please upload a CSV file to begin.")
+    st.info(" Please upload a CSV file to begin.")
